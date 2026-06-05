@@ -49,7 +49,7 @@ The project will evaluate:
 - Liquidity and leverage indicators
 - Overall quality of revenue growth
 
-## Planne Output
+## Planned Output
 
 The final project will produce a peer financial performance scorecard that summarizes each company's revenue trend, margin support, cash conversion, working capital discipline, and balance sheet position.
 
