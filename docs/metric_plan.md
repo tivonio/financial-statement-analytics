@@ -51,7 +51,7 @@ Margin metrics evaluate whether revenue trends are supported by profitability. F
 
 | Metric | Formula | Source Statement | Purpose | Potential Warning Sign |
 |---|---|---|---|---|
-| Gross margin | `gross_profit / revenue` | Income statement | Measure profitability after cost of goods sold | Revenue grows while gross margin declines |
+| Gross margin | `gross_profit / revenue` | Income statement | Measures profitability after cost of goods sold | Revenue grows while gross margin declines |
 | Operating margin | `operating_income / revenue` | Income statement | Measures profitability after operating expenses | Revenue grows while operating margin compresses |
 | Net margin | `net_income / revenue` | Income statement | Measures bottom-line profitability | Net margin improves while operating margin weakens |
 | SG&A ratio | `selling_general_admin_expenses / revenue` | Income statement | Measures operating cost burden | SG&A grows faster than revenue |
@@ -95,7 +95,7 @@ Working capital metrics evaluate whether revenue trends are accompanied by inven
 | Metric | Formula | Source Statement | Purpose | Potential Warning Sign |
 |---|---|---|---|---|
 | Inventory | Reported inventory | Balance sheet | Measures goods held for sale | Inventory rises while revenue is flat or declining |
-| Inventory growth | `(current_year_inventory / prior_year_inventory) - 1` | Balance sheet | Measure inventory buildup | Inventory grows faster than revenue |
+| Inventory growth | `(current_year_inventory / prior_year_inventory) - 1` | Balance sheet | Measures inventory buildup | Inventory grows faster than revenue |
 | Inventory as percentage of revenue | `inventory / revenue` | Balance sheet and income statement | Scales inventory against sales | Inventory intensity rises over time |
 | Inventory growth minus revenue growth | `inventory_growth - revenue_growth` | Balance sheet and income statement | Compares inventory growth to sales growth | Inventory materially exceeds revenue growth |
 | Accounts receivable | Reported accounts receivable | Balance sheet | Measures amounts owed by customers or wholesale partners | Receivables rise while revenue growth is weak |
@@ -121,9 +121,29 @@ Balance sheet metrics evaluate whether financial position is strengthening or we
 |---|---|---|---|---|
 | Current ratio | `current_assets / current_liabilities` | Balance sheet | Measures short-term liquidity | Current ratio weakens over time |
 | Cash as percentage of total assets | `cash_and_cash_equivalents / total_assets` | Balance sheet | Measures balance sheet flexibility | Cash cushion declines materially |
-| Debt-to-assets | `total_debt / total_assets` | Balance sheet | Measures leverage relative to assets | Debt burden rises over time |
-| Debt-to-equity | `total_debt / shareholders_equity` | Balance sheet | Measures leverage relative to equity | Debt-to-equity rises sharply |
-| Interest coverage | `operating_income / interest_expense` | Income statement | Measures ability to cover interest expense | Coverage weakens while debt rises |
+| Financial debt-to-assets | `financial_debt / total_assets` | Balance sheet | Measures traditional interest-bearing debt relative to assets | Financial debt burden rises over time |
+| Financial debt-to-equity | `financial_debt / shareholders_equity` | Balance sheet | Measures traditional interest-bearing debt relative to equity | Financial debt-to-equity rises sharply |
+| Lease-adjusted debt-to-assets | `lease_adjusted_debt / total_assets` | Balance sheet | Measures leverage after including operating lease liabilities | Lease-adjusted obligations rise materially |
+| Lease-adjusted debt-to-equity | `lease_adjusted_debt / shareholders_equity` | Balance sheet | Measures leverage after including operating lease liabilities relative to equity | Lease-adjusted debt-to-equity rises sharply |
+| Operating income interest coverage | `operating_income / interest_expense` | Income statement | Measures whether operating profit covers reported interest expense | Coverage weakens while debt rises |
+
+### Debt Definition Note
+
+This project will distinguish between financial debt and lease-adjusted debt.
+
+Financial debt includes short-term debt, current portion of long-term debt, long-term debt, and finance lease liabilities where separately reported.
+
+Lease-adjusted debt includes financial debt plus current and noncurrent operating lease liabilities. This distinction matters for apparel and retail companies because store lease obligations can materially affect leverage comparisons.
+
+The analysis will report lease-adjusted leverage separately rather than folding operating lease liabilities into total debt without labeling the adjustment.
+
+### Interest Coverage Definition Note
+
+This project will use operating income interest coverage, defined as `operating_income / interest_expense`.
+
+This measure evaluates whether operating profit covers reported interest expense. It is not the same as EBITDA-based interest coverage, which adds back depreciation and amortization, and it is not a fixed-charge coverage measure that incorporates lease-related obligations.
+
+This distinction matters for apparel and retail companies because depreciation, amortization, store leases, and capital intensity can vary across business models. Operating income interest coverage is used as a conservative, statement-based measure for the first version of the project. If depreciation, amortization, and lease expense data are consistently available, EBITDA-based coverage or fixed-charge coverage may be added later as supplemental metrics.
 
 ### Interpretation
 
@@ -145,6 +165,24 @@ The final scorecard will classify each company based on the combined evidence ac
 | Weaker performance | Revenue is flat or declining, or financial indicators point to broader deterioration |
 | Inconclusive | The evidence does not support a clear interpretation |
 
+## How Evidence Maps to Classification
+
+The scorecard will use analyst judgment rather than a rigid point system. Each company will be evaluated across five evidence groups: revenue growth, margin support, cash conversion, working capital discipline, and balance sheet pressure.
+
+Revenue growth establishes the performance trend, but it is not enough by itself to classify a company as stronger. The supporting evidence groups determine whether that growth appears financially supported.
+
+A supporting evidence group will be considered strained when multiple metrics in that group move in an unfavorable direction, or when one primary metric shows meaningful deterioration. For example, margin support may be strained if gross and operating margins decline while revenue grows. Cash conversion may be strained if operating cash flow weakens relative to revenue or net income. Working capital may be strained if inventory or receivables grow materially faster than revenue. Balance sheet pressure may be strained if liquidity weakens or leverage rises.
+
+In general:
+
+- **Supported growth** requires revenue growth plus broadly stable or improving support from margins, cash conversion, working capital, and balance sheet indicators.
+- **Mixed performance** applies when the evidence is split, such as revenue growth with one or two strained support areas, or weaker revenue growth with otherwise stable financial indicators.
+- **Growth with pressure** applies when revenue grows but two or more supporting evidence groups show strain, or when one major area, such as cash conversion or leverage, raises a significant concern.
+- **Weaker performance** applies when revenue is flat or declining and multiple supporting indicators also deteriorate.
+- **Inconclusive** applies when missing data, inconsistent reporting, unusual one-time events, or conflicting signals prevent a clear interpretation.
+
+The classification should be supported by the full pattern of evidence, not by a single ratio.
+
 ## Metric Construction Notes
 
 The project will use annual financial statement data for the latest five complete fiscal years available.
@@ -164,7 +202,12 @@ Each company year record should include, where available:
 - Cash and cash equivalents
 - Total assets
 - Total liabilities
-- Total debt
+- Short-term debt
+- Current portion of long-term debt
+- Long-term debt
+- Finance lease liabilities, where separately reported
+- Current operating lease liabilities
+- Noncurrent operating lease liabilities
 - Shareholders' equity
 - Interest expense
 
